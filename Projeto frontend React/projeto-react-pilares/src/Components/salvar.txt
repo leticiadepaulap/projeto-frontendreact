@@ -1,0 +1,43 @@
+import { CardStyle } from "./Style";
+import { getItem, setItem } from './scr/services/localStorage'
+import React, {useState} from 'react'
+import { BsFillCartCheckFill, BsFillCartPlusFill } from 'react-icons/bs'
+
+
+const Produtos = () => {
+  const [cart,setCart] = useState(getItem('carrinho') || [])
+  const handleClick = (obj) => {
+          const element = cart.find((e) => e.id === obj.id)
+          if (element){
+              const arrFilter = cart.filter((e) =>e.id !== obj.id)
+              setCart(arrFilter)
+              setItem('carrinho', arrFilter)
+          } else {
+              setCart([...cart,obj])
+              setItem('carrinho', [...cart,obj])
+          }
+      }
+     
+  }
+
+function Card(props) {
+  return ( 
+  
+    <div className="Card">
+      <h1>{props.title}</h1>
+      <img src = {props.imageUrl} alt = {props.title} />
+      <p>{props.value}</p>
+      <button onClick={() => handleClick(e)}>
+                            {
+                                cart.some((itemCart) => itemCart.id === e.id) ? (
+                                    <BsFillCartCheckFill />  
+                                    ) : (
+                                        <BsFillCartPlusFill />
+                                    )
+                                  }
+                                  </button>
+                                  </div> 
+  );
+}
+
+export default Card;
